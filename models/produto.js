@@ -17,8 +17,8 @@ module.exports = (sequelize, DataTypes) => {
     nome: DataTypes.STRING,
     sabor: DataTypes.STRING,
     quantidade: DataTypes.INTEGER,
-    // dataentrada: DataTypes.DATE,
-    //datavalidade: DataTypes.DATE    
+    dataentrada: DataTypes.DATE,
+    datavalidade: DataTypes.DATE    
   }, {
     sequelize,
     modelName: 'Produto'

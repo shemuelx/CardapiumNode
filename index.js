@@ -6,62 +6,62 @@ const app = express()
 const sequelize = new Sequelize({ dialect: 'sqlite', storage: './produtos.db' })
 const produtos = Produto(sequelize, DataTypes)
 
-// Prcisamos parse JSON vindo dos requests
+// Precisamos parse JSON vindo dos requests
 app.use(express.json())
 
 // Listar produtos
-app.get('/produtos', (req, res) => {
-  produtos.findAll().then(produtos => {
-    res.json({produtos})
-  })  
+app.get('/produtos', async (req, res) => {
+  const todos = await produtos.findAll()
+  res.json({produtos: todos}) 
 })
 
 // Create produto
-app.post('/produto', (req, res) => {
-  var body = req.body
+app.post('/produto', async (req, res) => {
+  const body = req.body
+  const produto = produtos.create(body)
 
-  res.json(body)
+  res.json({produto})
 })
 
 // Show produto
 app.get('/produto/:id', async (req, res) => {   
-  var produto = await produtos.findByPk(req.params.id)
+  const produto = await produtos.findByPk(req.params.id)
   res.json({produto})
 })
 
 // Update produto
-app.put('/produto/:id', (req, res) => {
-  var id = req.params.id
+app.put('/produto/:id', async (req, res) => {
+  const id = req.params.id 
+  const body = req.body
+  const produto = await produtos.findByPk(id)
+
+  if (produto) {
+    await produto.update({ ...body })
+      res.send({ produto })
+  } else {
+      res.status(404)
+      res.send({ message: 'produto not found' })
+  }
 
   res.send({ action: 'Updating produto', produtoId: id })
 })
 
 // Delete produto
-app.delete('/produto/:id', (req, res) => {
-  const produtoId = req.params.id
+app.delete('/produto/:id', async (req, res) => {
+  const id = req.params.id   
+  const produto = await produtos.findByPk(id)
 
-  res.send({ action: 'Deleting produto', produtoId: produtoId })
+  if (produto) {
+    await produto.destroy()
+      res.send({ produto })
+  } else {
+      res.status(404)
+      res.send({ message: 'produto not found' })
+  }
+
 })
 
 // Server listening message
 app.listen(3000, () => {
   console.log('Iniciando o ExpressJS na Porta 3000')
 })
-
- 
-// Find a produto by Id
-exports.findById = (req, res) => {  
-  produto.findById(req.params.produtoid).then(produto => {
-    res.send(produto);
-  })
-};
- 
-// Delete a produto by Id
-exports.delete = (req, res) => {
-  const id = req.params.produtoid;
-  produto.destroy({
-    where: { id: id }
-  }).then(() => {
-    res.status(200).send(`deleted successfully produto id ${id}`);
-  });
-};

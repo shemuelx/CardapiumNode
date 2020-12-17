@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tiagoamaro/toti-nodejs-exercicio-2020.git"
+    "url": "git+https://github.com/shemuelx/CardapiumNode.git"
   },
   "author": "shemuelx",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/tiagoamaro/toti-nodejs-exercicio-2020/issues"
+    "url": "https://github.com/shemuelx/CardapiumNode/issues"
   },
-  "homepage": "https://github.com/tiagoamaro/toti-nodejs-exercicio-2020#readme",
+  "homepage": "https://github.com/shemuelx/CardapiumNode#readme",
   "dependencies": {
     "express": "^4.17.1",
     "sequelize": "^6.3.4",
