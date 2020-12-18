@@ -10,7 +10,7 @@ const produtos = Produto(sequelize, DataTypes)
 app.use(express.json())
 
 // Listar produtos
-app.get('/produto', async (req, res) => {
+app.get('/produtos',  async (req, res) => {
   const todos = await produtos.findAll()
   res.json({produtos: todos}) 
 })
